@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_booking_form" model="ir.ui.view">
+        <field name="name">Sale Order Booking Form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="after">
+                <field name="booking_type" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="before">
+                <field name="booking_start" optional="show"
+                       widget="daterange" options="{'related_end_date': 'booking_end'}"
+                       attrs="{'readonly': [('booking_type', '=', False)]}"/>
+                <field name="booking_end" optional="show"
+                       widget="daterange" options="{'related_start_date': 'booking_start'}"
+                       attrs="{'readonly': [('booking_type', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
